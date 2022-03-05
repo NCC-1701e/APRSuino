@@ -1,10 +1,10 @@
 /*
-  APRS
+  APRSuino
   by: João Faria
   https://jfaria.org
   based on an google search experience v2
   Março 2022
-  Version 0.1 alpha
+  Version 0.2 alpha
 */
 
 #include <ESP8266WiFi.h>
@@ -18,11 +18,10 @@ String SERVER_VERIFIED = "verified";
 // define your callsign, passcode and location
 #define CALLSIGN "CR7BAV-3"
 #define CALLSIGN_PASS "18084"
-//#define LOCATION "3711.82N/00724.87W" // Alfandega
 #define LOCATION "3711.82N/00724.67W" // Rio Guadiana
 #define APRS_SYMBOL "Y" // - House, P police, Y Sail boat, > Car, 
 #define APRS_INFO "Teste 123"
-#define VERSION "2"
+#define VERSION "3"
 
 #define UpdateIntervalTimer 1000 * 60 * 3// ms * seconds * minutes
 #define timeOutTimer 15000
@@ -32,8 +31,8 @@ unsigned long startIntervalTime;
 int i = 0;
 
 //WiFi 
-char ssid[] = "VReal";        // SSID
-char pass[] = "faria123456";  // password
+char ssid[] = "WiFi";        // SSID
+char pass[] = "Password";  // password
 
 WiFiClient  client;
 
@@ -84,7 +83,6 @@ void loop() {
         {
           blink_led(500);
           //Serial.println("Connected:");
-          //user CR7BAV pass 18084 vers APRSuino 0.01
           String auth = "";
           auth += "user ";
           auth += CALLSIGN;
@@ -192,13 +190,6 @@ boolean server_response(Stream* stream, String checkResponse)
 
   startTime = millis();
 
-  //debugy
-  //Serial.print("Waiting response: ");
-  //Serial.print(checkResponse);
-  //int string_size = checkResponse.length();
-  //Serial.print( " | tamanho string = ");
-  //Serial.println(string_size);
-
   delay(50);
 
   while ( timeOut != true )
@@ -230,7 +221,6 @@ boolean server_response(Stream* stream, String checkResponse)
   delay(500);
   return found;
 }
-
 
 void blink_led(int delay_ms)
 {
